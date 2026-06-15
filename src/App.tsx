@@ -1,12 +1,15 @@
 import { useEffect, useState } from "react";
 import { BottomTabBar } from "@/components/BottomTabBar";
 import { LogButton } from "@/components/LogButton";
+import { QuickLogSheet } from "@/components/QuickLogSheet";
+import { Today } from "@/screens/Today";
 import { Placeholder } from "@/screens/Placeholder";
 import type { TabId } from "@/navigation/tabs";
 import { useStore } from "@/store/useStore";
 
 export default function App() {
   const [tab, setTab] = useState<TabId>("today");
+  const [quickLogOpen, setQuickLogOpen] = useState(false);
 
   // Hydrate in-memory state from IndexedDB on boot so data survives a refresh.
   const hydrate = useStore((s) => s.hydrate);
@@ -29,9 +32,7 @@ export default function App() {
     <div className="relative mx-auto flex min-h-full max-w-md flex-col bg-background shadow-sm">
       {/* Scrollable content area. Bottom padding clears the fixed tab bar. */}
       <main className="flex-1 overflow-y-auto pb-28">
-        {tab === "today" && (
-          <Placeholder title="Today" subtitle="Your live deficit, at a glance." />
-        )}
+        {tab === "today" && <Today onNavigate={setTab} />}
         {tab === "food" && (
           <Placeholder title="Food" subtitle="Three equal ways to log." />
         )}
@@ -46,8 +47,10 @@ export default function App() {
         )}
       </main>
 
-      {/* Law #1 + #4: the Log button is always present, same spot everywhere. */}
-      <LogButton onClick={() => setTab("today")} />
+      {/* Law #1 + #4: the Log button is always present, same spot everywhere,
+          and opens a one-tap quick-log sheet from any screen. */}
+      <LogButton onClick={() => setQuickLogOpen(true)} />
+      <QuickLogSheet open={quickLogOpen} onOpenChange={setQuickLogOpen} />
       <BottomTabBar active={tab} onChange={setTab} />
     </div>
   );
