@@ -1,0 +1,1 @@
+{"root":["./src/App.tsx","./src/main.tsx","./src/components/BottomTabBar.tsx","./src/components/LogButton.tsx","./src/components/ui/button.tsx","./src/lib/utils.ts","./src/navigation/tabs.ts","./src/screens/Placeholder.tsx"],"version":"5.9.3"}
