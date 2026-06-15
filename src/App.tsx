@@ -3,7 +3,9 @@ import { BottomTabBar } from "@/components/BottomTabBar";
 import { LogButton } from "@/components/LogButton";
 import { QuickLogSheet } from "@/components/QuickLogSheet";
 import { Today } from "@/screens/Today";
-import { Placeholder } from "@/screens/Placeholder";
+import { Food } from "@/screens/Food";
+import { Recovery } from "@/screens/Recovery";
+import { Settings } from "@/screens/Settings";
 import type { TabId } from "@/navigation/tabs";
 import { useStore } from "@/store/useStore";
 
@@ -33,18 +35,9 @@ export default function App() {
       {/* Scrollable content area. Bottom padding clears the fixed tab bar. */}
       <main className="flex-1 overflow-y-auto pb-28">
         {tab === "today" && <Today onNavigate={setTab} />}
-        {tab === "food" && (
-          <Placeholder title="Food" subtitle="Three equal ways to log." />
-        )}
-        {tab === "recovery" && (
-          <Placeholder
-            title="Recovery"
-            subtitle="Readiness, on your terms."
-          />
-        )}
-        {tab === "settings" && (
-          <Placeholder title="Settings" subtitle="Units, target, signals." />
-        )}
+        {tab === "food" && <Food />}
+        {tab === "recovery" && <Recovery />}
+        {tab === "settings" && <Settings />}
       </main>
 
       {/* Law #1 + #4: the Log button is always present, same spot everywhere,
