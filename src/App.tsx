@@ -1,11 +1,27 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BottomTabBar } from "@/components/BottomTabBar";
 import { LogButton } from "@/components/LogButton";
 import { Placeholder } from "@/screens/Placeholder";
 import type { TabId } from "@/navigation/tabs";
+import { useStore } from "@/store/useStore";
 
 export default function App() {
   const [tab, setTab] = useState<TabId>("today");
+
+  // Hydrate in-memory state from IndexedDB on boot so data survives a refresh.
+  const hydrate = useStore((s) => s.hydrate);
+  const hydrated = useStore((s) => s.hydrated);
+  useEffect(() => {
+    void hydrate();
+  }, [hydrate]);
+
+  if (!hydrated) {
+    return (
+      <div className="flex min-h-full items-center justify-center text-sm text-muted-foreground">
+        Loading…
+      </div>
+    );
+  }
 
   return (
     // Mobile-first frame: capped at a phone width and centred so it feels like
